@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title><%= title %></title>
+        <link rel='stylesheet' href='/stylesheets/style.css' />
+
+        <script type="text/javascript" src="/javascripts/EaselJS-1.0.0/lib/easeljs.min.js"></script>
+        <script type="text/javascript" src="/javascripts/jquery/dist/jquery.min.js"></script>
+        <script type="text/javascript" src="/socket.io/socket.io.js"></script>
+        
+        <script type="text/javascript" src="/javascripts/game/main.js"></script>
+
+    </head>
+    <body onload="iniciarConexao()">
+        <div class="cabecalho">
+            <h1>Bem vindo à <%= title %></h1>
+        </div>
+        <div id="areaDoJogo">
+            <canvas id="gameCanvas" width="800" height="500"></canvas>
+        </div>
+    </body>
+</html>

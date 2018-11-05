@@ -1,0 +1,43 @@
+body {
+    padding: 0px;
+    margin: 0px;
+    font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+    background-color: #f0f0f0;
+}
+
+a {
+    color: #00B7FF;
+    text-decoration: none;
+}
+
+#gameCanvas {
+    box-shadow: 0px 3px 5px #000;
+    background-color: #FFF;
+}
+
+.cabecalho {
+    width: 100%;
+    text-align:  center;
+    padding-top: 10px;
+    padding-bottom:  10px;
+    background-color: #666;
+    color: #F0F0F0;
+}
+
+.corpo {
+    width: 400px;
+    margin: auto;
+}
+
+.corpo ul li {
+    list-style: none;
+    font-size: 30px;
+}
+.corpo ul {
+    padding: 0px;
+    margin: 0px;
+}
+
+#areaDoJogo {
+    text-align: center;
+}
