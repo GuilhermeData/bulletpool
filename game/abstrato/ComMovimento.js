@@ -1,6 +1,6 @@
 /* global game */
 
-module.exports = function(tipoDeMovimento, velocidade = 2)
+module.exports = function(tipoDeMovimento, velocidade = 4)
 {
     this.moverPor = tipoDeMovimento;
     this.velocidade = velocidade;

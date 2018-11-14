@@ -3,9 +3,9 @@ module.exports = function(
     idNoUniverso = '', 
     x = 0, 
     y = 0, 
-    corDeRenderizacao = 'red', 
+    corDeRenderizacao = '#FFF', 
     temaDeRenderizacao = 'circle', 
-    tamanhoDeRenderizacao = 8
+    tamanhoDeRenderizacao = 12
 ) {
     
     this.idDaSala = idDaSala;

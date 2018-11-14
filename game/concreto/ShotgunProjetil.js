@@ -8,9 +8,9 @@ module.exports = function(atirador, idNoUniverso, destinoX, destinoY, coicear)
         idNoUniverso,
         atirador.posicaoX, 
         atirador.posicaoY, 
-        'red', 
+        '#FFF', 
         'circle', 
-        2]);
+        4]);
     game.abstrato.ComMovimento.apply(this, ['destinoIndefinido', 60]);
     
     let preparacaoParaOCoice = this.escolherDestino(destinoX, destinoY, 'shotgun');

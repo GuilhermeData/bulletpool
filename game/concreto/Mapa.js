@@ -13,7 +13,7 @@ module.exports = {
         (function(_this, _universo) {
 
             let x = -1;
-            while(++x < 300) {
+            while(++x < 0) {
 
                 let novoID = game.utilidades.idAleatorio(15);
 

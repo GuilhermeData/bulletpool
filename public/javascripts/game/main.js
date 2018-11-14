@@ -13,7 +13,9 @@ function iniciarConexao() {
     var player = {};
     
     socket.on('connect', function(){
-
+        
+        /** Prepara para receber as respostas
+         */
         socket.on('conexaoAceita', function(){
             iniciarJogo();
         });
@@ -21,7 +23,10 @@ function iniciarConexao() {
         socket.on('conexaoRejeitada', function(){
             $('#areaDoJogo').html('<h1>Sala lotada :/</h1>');
         });
-
+        /**/
+        
+        /** Então envia o sinal para que alguma das respostas possíveis venha
+         */
         socket.emit('salaZero');
     });
     
@@ -95,14 +100,30 @@ function iniciarConexao() {
                 y > maxY ? maxY : y 
             ) : 0;
     }
-
-    // #todo aperfeiçoar
-    function criarEntidade(dadosDaEntidade) {
+    
+    function criarPlayer(dadosDaEntidade) {
+        var img = new Image();
+        img.src = "images/robot.png";
+        var bitmap = new createjs.Bitmap(img);
+        bitmap.x = dadosDaEntidade.posicaoX;
+        bitmap.y = dadosDaEntidade.posicaoY;
+        return bitmap;
+    }
+    
+    function criarCirculo(dadosDaEntidade) {
         let circle = new createjs.Shape();
         circle.graphics.beginFill(dadosDaEntidade.renderizar.cor).drawCircle(0, 0, dadosDaEntidade.renderizar.tamanho);
         circle.x = dadosDaEntidade.posicaoX;
         circle.y = dadosDaEntidade.posicaoY;
         return circle;
+    }
+
+    // #todo aperfeiçoar
+    function criarEntidade(dadosDaEntidade) {
+        if(dadosDaEntidade.renderizar.tamanho > 8) {
+            return criarPlayer(dadosDaEntidade);
+        }
+        else return criarCirculo(dadosDaEntidade);
     }
     
     // #todo aperfeiçoar
@@ -114,6 +135,7 @@ function iniciarConexao() {
     
     function prepararParaIniciarAnimacao() {
         
+        // Isso será testado a cada frame, até que seja true e mude a função do Ticker
         if(player.idNoUniverso && universo[player.idNoUniverso]) {
             createjs.Ticker.removeAllEventListeners("tick");
             createjs.Ticker.addEventListener("tick", animar);
@@ -123,6 +145,21 @@ function iniciarConexao() {
     function animar() {
         atualizarCamera();
         stage.update();
+    }
+    
+    function pintarMapa() {
+        
+        // adicionar o mapa
+        let img = new Image();
+        img.src = "images/tile-simple.jpg";
+
+        let shape = new createjs.Shape();
+
+        shape.graphics.beginBitmapFill(img).drawRect(0,0,2250,1920);
+
+        stage.addChild(shape);
+        stage.swapChildren(universo[player.idNoUniverso], shape);
+            
     }
 
     function iniciarJogo() {
@@ -136,13 +173,6 @@ function iniciarConexao() {
         socket.on('dadosDePlayer', function(dados) {
             mapa = dados.mapa;
             player = dados.player;
-            
-            // adicionar o mapa
-            var img = new Image();
-            img.src = "images/mapa2.jpg";
-            var bitmap = new createjs.Bitmap(img);
-            stage.addChild(bitmap);
-            stage.swapChildren(universo[player.idNoUniverso], bitmap);
         });
 
         socket.on('atualizarUmTick', function(dados) {

@@ -27,7 +27,7 @@ module.exports = function(idDaSala, numeroMaximoDePlayers, nomeDoMapa) {
         
         let idDoPlayer = socket.id;
         
-        this.players[idDoPlayer] = new game.concreto.PlayerRobot(this.idDaSala, idDoPlayer, 50, 50, '#900');
+        this.players[idDoPlayer] = new game.concreto.PlayerRobot(this.idDaSala, idDoPlayer, 50, 50, '#FFF');
         
         this.sockets[idDoPlayer] = socket;
         
