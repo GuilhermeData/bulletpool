@@ -21,7 +21,12 @@ module.exports = function(idDaSala, numeroMaximoDePlayers, nomeDoMapa) {
         estatico: {}
     };
     this.loop = null;
+    
+    // O mapa gera seu próprio ID no momento do instanciamento
     this.mapa = new game.concreto.Mapa[nomeDoMapa](idDaSala, this.universo);
+    
+    // Setando o mapa como objeto estatico
+    this.universo.estatico[this.mapa.idNoUniverso] = this.mapa;
     
     this.conectarPlayer = function(socket) {
         

@@ -1,6 +1,12 @@
 /* global createjs */
 
 function iniciarConexao() {
+    
+    
+    //#todo Isso só funcionou para o background do mapa quando eu carreguei aqui 
+    var imagemDoMapa = new Image();
+    imagemDoMapa.src = "images/tile-simple.png"; 
+    // Preciso entender isso depois
 
     const stage = new createjs.Stage("gameCanvas");
 
@@ -101,6 +107,17 @@ function iniciarConexao() {
             ) : 0;
     }
     
+    
+    function criarMapa(dadosDaEntidade) {
+        
+        // #todo ISSO É TEMPORÁRIO, depois eu vou achar um jeito de desenhar direito o mapa
+        // usando a variável do mapa mesmo
+        let shape = new createjs.Shape();
+        shape.graphics.beginBitmapFill(imagemDoMapa)
+                .drawRect(0,0,dadosDaEntidade.width, dadosDaEntidade.height);
+        return shape;
+    }
+    
     function criarPlayer(dadosDaEntidade) {
         var img = new Image();
         img.src = "images/robot.png";
@@ -120,10 +137,11 @@ function iniciarConexao() {
 
     // #todo aperfeiçoar
     function criarEntidade(dadosDaEntidade) {
-        if(dadosDaEntidade.renderizar.tamanho > 8) {
+        if(dadosDaEntidade.renderizar.tamanho > 8 && dadosDaEntidade.renderizar.tamanho < 1000) {
             return criarPlayer(dadosDaEntidade);
-        }
-        else return criarCirculo(dadosDaEntidade);
+        } else if(dadosDaEntidade.renderizar.tamanho > 1000) {
+            return criarMapa(dadosDaEntidade);
+        } else return criarCirculo(dadosDaEntidade);
     }
     
     // #todo aperfeiçoar
@@ -135,8 +153,17 @@ function iniciarConexao() {
     
     function prepararParaIniciarAnimacao() {
         
-        // Isso será testado a cada frame, até que seja true e mude a função do Ticker
-        if(player.idNoUniverso && universo[player.idNoUniverso]) {
+        /* Isso será testado a cada frame, até que seja true e mude a função do Ticker
+         * Quando o player estiver setado e desenhado, e o mapa estiver setado, entramos aqui
+         */
+        if(player.idNoUniverso 
+                && universo[player.idNoUniverso] 
+                && mapa.idNoUniverso 
+                && universo[mapa.idNoUniverso]) {
+            
+            // #todo isso não pode ficar aqui
+            stage.setChildIndex(universo[mapa.idNoUniverso], 0);
+            
             createjs.Ticker.removeAllEventListeners("tick");
             createjs.Ticker.addEventListener("tick", animar);
         }
@@ -146,35 +173,27 @@ function iniciarConexao() {
         atualizarCamera();
         stage.update();
     }
-    
-    function pintarMapa() {
-        
-        // adicionar o mapa
-        let img = new Image();
-        img.src = "images/tile-simple.jpg";
-
-        let shape = new createjs.Shape();
-
-        shape.graphics.beginBitmapFill(img).drawRect(0,0,2250,1920);
-
-        stage.addChild(shape);
-        stage.swapChildren(universo[player.idNoUniverso], shape);
-            
-    }
 
     function iniciarJogo() {
-
+        
+        /* Começa a escutar o teclado e o mouse
+         */
         configurarComandos();
         
+        /* Começa a escutar se o player e o mapa estão setados
+         */
         createjs.Ticker.framerate = 60;
-        
         createjs.Ticker.addEventListener("tick", prepararParaIniciarAnimacao);
-
+        
+        /* Começa a escutar se o server mandou os dados do player e do mapa
+         */
         socket.on('dadosDePlayer', function(dados) {
             mapa = dados.mapa;
             player = dados.player;
         });
 
+        /* Escuta o pacote básico de dados do server, que tem a cada frame
+         */
         socket.on('atualizarUmTick', function(dados) {
 
             if(Object.keys(dados.remover).length > 0) {
@@ -201,7 +220,9 @@ function iniciarConexao() {
             }
 
         });
-
+        
+        /* Informa o servidor que pode começar a mandar dados
+         */
         socket.emit('prontoParaReceberDados');
     }
 };

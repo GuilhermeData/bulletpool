@@ -6,6 +6,14 @@ module.exports = {
 
         game.abstrato.MapaPequeno.apply(this);
         
+        this.idNoUniverso = game.utilidades.idAleatorio(15);
+        
+        this.renderizar = {
+            tamanho: 0
+        };
+        
+        this.renderizar.tamanho = this.width;
+        
         /**
          * Inicialização. 
          * Florestas têm árvores.
