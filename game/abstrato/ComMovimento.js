@@ -89,10 +89,6 @@ module.exports = function(tipoDeMovimento, velocidade = 4)
             
         } else if(this.moverPor === 'destinoIndefinido') {
             
-            // #todo otimizar isso
-            let limiteLarguraDoMapa = game.salas[this.idDaSala].mapa.width;
-            let limiteAlturaDoMapa = game.salas[this.idDaSala].mapa.height;
-            
             let times = this.velocidade;
             
             while(--times > 0) {

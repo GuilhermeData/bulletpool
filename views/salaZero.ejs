@@ -9,9 +9,11 @@
         <script type="text/javascript" src="/socket.io/socket.io.js"></script>
         
         <script type="text/javascript" src="/javascripts/game/main.js"></script>
+        <script type="text/javascript" src="/javascripts/game/salaZero/core.js"></script>
+        <script type="text/javascript" src="/javascripts/game/salaZero/renderer.js"></script>
 
     </head>
-    <body onload="gc.iniciarConexao()">
+    <body onload="gc.core.iniciarConexao()">
         <div class="cabecalho">
             <h1>Bem vindo à <%= title %></h1>
         </div>

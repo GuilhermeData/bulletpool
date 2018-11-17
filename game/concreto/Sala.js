@@ -72,6 +72,15 @@ module.exports = function(idDaSala, numeroMaximoDePlayers, nomeDoMapa) {
             delete this.sockets[idDoPlayer];
             
             delete game.idSalaDoPlayer[idDoPlayer];
+            
+            // Mandamos a informação para todos os outros sockets
+            for(let id in this.sockets) {
+                this.sockets[id].emit('atualizarUmTick', {
+                    criar: {},
+                    remover: {[idDoPlayer]: true},
+                    atualizar: {}
+                });
+            }
         }
     };
     
@@ -110,6 +119,8 @@ module.exports = function(idDaSala, numeroMaximoDePlayers, nomeDoMapa) {
                     // REMOVER COISAS
                     for(let idFinal in pacoteDeDadosParaAtualizacao.remover) {
                         dados.remover[idFinal] = pacoteDeDadosParaAtualizacao.remover[idFinal];
+                        // Removemos efetivamente
+                        delete _this.universo.dinamico[idFinal];
                     }
 
                     // CRIAR COISAS
@@ -131,5 +142,12 @@ module.exports = function(idDaSala, numeroMaximoDePlayers, nomeDoMapa) {
         },1000/60);
         
     })(this);
+    
+    // #todo ISSO FICA AQUI PARA CONTAR OS OBJETOS NO UNIVEROS, DEPOIS EU REMOVO
+    if(this.idDaSala === 'salaZero') {
+        setInterval(()=>{
+            console.log(Object.keys(this.universo.dinamico).length);
+        },500);
+    }
     
 };
