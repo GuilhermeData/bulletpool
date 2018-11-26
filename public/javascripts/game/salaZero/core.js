@@ -8,8 +8,8 @@
 function iniciarImagensSalaZero() {
     
     //#todo Isso só funcionou para o background do mapa quando eu carreguei no iniciarConexão
-    gc.images.imagemDoMapa = new Image();
-    gc.images.imagemDoMapa.src = "images/tile-simple.png"; 
+    gc.imagens.imagemDoMapa = new Image();
+    gc.imagens.imagemDoMapa.src = "images/tile-simple.png"; 
     // Preciso entender isso depois
 }
 

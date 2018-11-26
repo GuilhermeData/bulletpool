@@ -11,7 +11,7 @@ function SalaZeroRenderer() {
         // #todo ISSO É TEMPORÁRIO, depois eu vou achar um jeito de desenhar direito o mapa
         // usando a variável do mapa mesmo
         let shape = new createjs.Shape();
-        shape.graphics.beginBitmapFill(gc.images.imagemDoMapa)
+        shape.graphics.beginBitmapFill(gc.imagens.imagemDoMapa)
                 .drawRect(0,0,dadosDaEntidade.width, dadosDaEntidade.height);
         return shape;
     };

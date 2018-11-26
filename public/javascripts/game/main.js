@@ -14,8 +14,8 @@ const gc = {
         iniciarJogo: {}
     },
     
-    // coisas em geral, helpers
-    general: {},
+    // coisas em geral
+    helpers: {},
     
     // configurações
     config: {},
@@ -23,9 +23,14 @@ const gc = {
     // informações
     info: {},
     
+    // imagens precisam ser pré-carregadas
+    imagens: {},
+    
+    // sons também
+    sons: {},
+    
     // coisas de animação
     renderer: {},
-    images: {},
     stage: {},
     
     // coisas básicas e importantes
